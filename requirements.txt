@@ -1,0 +1,6 @@
+streamlit
+openai-whisper
+moviepy
+ffmpeg-python
+srt
+openai
