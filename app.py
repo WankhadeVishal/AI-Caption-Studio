@@ -1107,7 +1107,23 @@ def main() -> None:
                 status_placeholder.empty()
                 progress_bar.empty()
                 st.session_state.result = None
-                st.error(f"Processing failed: {exc}")
+                error_message = str(exc)
+                if "ffmpeg" in error_message.lower():
+                    st.error("Processing failed: FFmpeg is not installed on this deployment.")
+                    st.markdown(
+                        """
+                        <div class="glass-card">
+                            <h3>Deployment fix</h3>
+                            <p class="hint">
+                                Add <code>ffmpeg</code> to a root-level <code>packages.txt</code> file in your repository
+                                and redeploy the app on Streamlit Community Cloud.
+                            </p>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.error(f"Processing failed: {exc}")
                 st.markdown(
                     """
                     <div class="glass-card">
